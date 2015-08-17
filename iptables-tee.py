@@ -5,9 +5,18 @@ import sys
 import os
 from subprocess import call
 
+def help():
+  print ""
+  print "Usage: echo \"<rule-specification>\" | ./iptables-tee.py <table>"
+  print "   or: ./iptables-tee.py <table>, then write your rule-spec and press Enter followed by Ctrl-D"
+  print " WARN: Please avoid using commands other than Append (-A) or Insert (-I). Other commands will surely mess up your persistent rules."
+  print "Ex. 1: echo \"-A INPUT -j ACCEPT\" | ./iptables-tee.py filter"
+  print "Ex. 2: echo \"-A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to 10.0.3.100:80\" | ./iptables-tee.py nat"
+
 def main():
   if len(sys.argv) < 2:
     print "Missing table specification!"
+	help()
     exit(1)
 
   table = sys.argv[1]
@@ -18,7 +27,7 @@ def main():
   if ok == 0:
     print "Succesfully applied rule to current configuration."
   else:
-    print "Error applying rule to current configuration!"
+    print "Error applying rule to current configuration! Please check your rule-spec."
     exit(1)
 
   print "Parsing rules file into temp file..."
@@ -28,7 +37,6 @@ def main():
     found_line = 0
     for line in rules:
       line = line.rstrip()
-      #print str(i)+":", line
       if found_line == 0 and line.find("*"+table) == 0:
         print "  Found table definition, adding rule..."
         found_line = i

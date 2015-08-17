@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 # Usage: echo "-A INPUT -j ACCEPT" | ./iptables-tee.py filter
 #        echo "-A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to 10.0.3.100:80" | ./iptables-tee.py nat
 import sys

@@ -12,7 +12,7 @@ def help():
   print "       followed by Ctrl-D"
   print " WARN: Please avoid using commands other than Append (-A) or Insert (-I)."
   print "       Other commands will surely mess up your persistent rules."
-  print "       WATCH OUT! Rules are always inserted on top of the existing"
+  print "       WATCH OUT! New rules are always inserted on top of the existing"
   print "       persistent rules."
   print "Ex. 1: echo \"-A INPUT -j ACCEPT\" | ./iptables-tee.py filter"
   print "Ex. 2: echo \"-A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to 10.0.3.100:80\" | ./iptables-tee.py nat"
@@ -57,7 +57,7 @@ def main():
   print "Confirm: move temp file to /etc/iptables.rules? [Y,n]",
   confirm = raw_input()
   if confirm == "" or confirm == "y" or confirm == "Y":
-    print "  Copying..."
+    print "  Copying...",
     call("sudo cp -f iptables.temp /etc/iptables.rules", shell=True)
   print "Done!"
 

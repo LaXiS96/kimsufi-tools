@@ -16,7 +16,7 @@ def help():
 def main():
   if len(sys.argv) < 2:
     print "Missing table specification!"
-	help()
+  help()
     exit(1)
 
   table = sys.argv[1]

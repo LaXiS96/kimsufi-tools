@@ -1,4 +1,4 @@
-﻿#!/bin/sh
+#!/bin/sh
 while [[ $# > 1 ]]; do
   key="$1"
   case $key in

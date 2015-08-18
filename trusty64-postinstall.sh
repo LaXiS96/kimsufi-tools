@@ -2,6 +2,7 @@
 exec &>/home/antonio/postinstall.log
 
 PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAmgBKIauSRY253H4hcrS+0o/rTBKz552KxDC3WiYiBR2y5IFbYa81975ywErVIavBuB/tSLTsXZldf4G9GZ4z5CWCGYo7ccqkwJw+7C4w9Pw2rlQzw6rZKxDL4N1IgeBANL5KT2wfLRmb86ZC2+CUhC6Qnw7HWTTSz5cobKwEloVU2GsUAAdryGmMypJVRP1f1V6pgheCxhFsgvGqZ/6JDXLguSIx3+eslHz3D68etbXf0NFLxj2g7CeL3GA0OPojkdj6h0N1u1FobO1SxQoDNX2K+titAzmec//p5c3H0lMSvjx8MkV3VFIYVRiJU+CNV/Oo57ntNPV7qkb3JR7fKQ== Kimsufi"
+TOOLS_DIR="/home/antonio/dedi-tools"
 
 apt-get update
 apt-get -y purge bind9 bind9utils && rm -rf /var/cache/bind/
@@ -56,7 +57,6 @@ echo "lxc.start.auto = 1" >> /etc/lxc/default.conf
 echo "lxc.start.delay = 5" >> /etc/lxc/default.conf
 chmod +x /var/lib/lxc
 
-TOOLS_DIR="/home/antonio/dedi-tools"
 apt-get -y install git &&
 git clone https://github.com/LaXiS96/dedi-tools.git $TOOLS_DIR &&
 chmod +x $TOOLS_DIR/*.sh $TOOLS_DIR/*.py &&

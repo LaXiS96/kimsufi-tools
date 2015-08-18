@@ -57,8 +57,7 @@ echo "lxc.start.delay = 5" >> /etc/lxc/default.conf
 chmod +x /var/lib/lxc
 
 TOOLS_DIR="/home/antonio/dedi-tools"
-apt-get -y install git
-sleep 10
+apt-get -y install git &&
 git clone https://github.com/LaXiS96/dedi-tools.git $TOOLS_DIR &&
 chmod +x $TOOLS_DIR/*.sh $TOOLS_DIR/*.py &&
 chown -R antonio:antonio $TOOLS_DIR

@@ -89,4 +89,4 @@ chmod +x /etc/network/if-pre-up.d/iptables
 #echo "iptables-persistent iptables-persistent/autosave_v6 boolean true" | debconf-set-selections
 #apt-get -y install iptables-persistent
 
-reboot
+#reboot

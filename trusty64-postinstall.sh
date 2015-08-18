@@ -54,7 +54,11 @@ echo "lxc.start.auto = 1" >> /etc/lxc/default.conf
 echo "lxc.start.delay = 5" >> /etc/lxc/default.conf
 chmod +x /var/lib/lxc
 
-wget -O /home/antonio/lxc-setup.sh https://gist.githubusercontent.com/LaXiS96/c1b23e1ca9673ec57b9a/raw/lxc-setup.sh && chmod +x /home/antonio/lxc-setup.sh && chown antonio:antonio /home/antonio/lxc-setup.sh
+TOOLS_DIR=/home/antonio/dedi-tools
+apt-get -y install git &&
+git clone https://github.com/LaXiS96/dedi-tools.git $TOOLS_DIR &&
+chmod +x $TOOLS_DIR/*.sh $TOOLS_DIR/*.py &&
+chown -R antonio:antonio $TOOLS_DIR
 
 #ufw allow 52020/tcp && ufw --force enable
 cat > /etc/iptables.rules <<EOT
@@ -73,9 +77,6 @@ cat > /etc/iptables.rules <<EOT
 -A INPUT -j LOGDROP
 -P FORWARD ACCEPT
 -P OUTPUT ACCEPT
-COMMIT
-*nat
-#-A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to 10.0.3.100:80
 COMMIT
 EOT
 #iptables-save > /etc/iptables.rules

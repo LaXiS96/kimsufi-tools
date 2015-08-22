@@ -12,9 +12,7 @@ while [[ $# > 1 ]]; do
   shift
 done
 
-if [[ -n $CONTAINER_NAME ]]; then
-  echo "Container name: $CONTAINER_NAME"
-else
+if [[ ! -n $CONTAINER_NAME ]]; then
   echo "FATAL: missing container name. (specify with -n <name>)"
   exit 1
 fi

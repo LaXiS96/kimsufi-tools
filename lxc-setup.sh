@@ -64,6 +64,7 @@ CONTAINER_IP=$(sudo lxc-info -iH -n $CONTAINER_NAME)
 
 #sudo lxc-stop -q -n $CONTAINER_NAME
 sudo lxc-attach -q -n $CONTAINER_NAME -- poweroff
+sleep 5
 
 sudo sed -i "s/127.0.1.1\s\{0,\}$CONTAINER_NAME/$HOST_IP $CONTAINER_NAME.dedi.laxis.it $CONTAINER_NAME/" $CONTAINER_ROOTFS/etc/hosts
 sudo sed -i "s/iface eth0 inet dhcp/iface eth0 inet static\n    address $CONTAINER_IP\n    netmask 255.255.255.0\n    gateway 10.0.3.1\n    dns-nameserver 10.0.3.1\n    dns-search dedi.laxis.it/" $CONTAINER_ROOTFS/etc/network/interfaces

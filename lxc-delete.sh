@@ -19,4 +19,5 @@ else
   exit 1
 fi
 
-sudo lxc-stop -n $CONTAINER_NAME && sudo lxc-destroy -n $CONTAINER_NAME
+sudo lxc-stop -n $CONTAINER_NAME
+sudo lxc-destroy -n $CONTAINER_NAME

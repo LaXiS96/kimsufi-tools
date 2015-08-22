@@ -35,4 +35,6 @@ if [[ ! -n $PROTOCOL ]]; then
   exit 1
 fi
 
+echo "Activating rule..."
 sudo iptables -t nat -A PREROUTING -i eth0 -p $PROTOCOL --dport $PORT -j DNAT --to $ADDRESS:$PORT
+echo "Done!"

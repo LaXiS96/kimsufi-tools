@@ -23,6 +23,12 @@ if [[ ! -n $CONTAINER_NAME ]]; then
   exit 1
 fi
 
+HOST_IP=$(curl -s https://api.ipify.org)
+if [[ ! -n $HOST_IP ]]; then
+  echo "FATAL: could not retrieve host IP."
+  exit 1
+fi
+
 echo "Creating container $CONTAINER_NAME..."
 sudo lxc-create -t download -n $CONTAINER_NAME -- -d ubuntu -r trusty -a amd64
 if [[ ! $? -eq 0 ]]; then
@@ -36,8 +42,6 @@ if [[ ! -d $CONTAINER_DIR ]]; then
   echo "FATAL: could not find container folder. Was the container actually created?"
   exit 1
 fi
-
-#sudo lxc-stop -q -n $CONTAINER_NAME
 
 sudo mkdir -p $CONTAINER_ROOTFS/root/.ssh
 sudo chmod 700 $CONTAINER_ROOTFS/root/.ssh
@@ -61,7 +65,6 @@ CONTAINER_IP=$(sudo lxc-info -iH -n $CONTAINER_NAME)
 #sudo lxc-stop -q -n $CONTAINER_NAME
 sudo lxc-attach -q -n $CONTAINER_NAME -- poweroff
 
-HOST_IP=$(curl -s https://api.ipify.org)
 sudo sed -i "s/127.0.1.1\s\{0,\}$CONTAINER_NAME/$HOST_IP $CONTAINER_NAME.dedi.laxis.it $CONTAINER_NAME/" $CONTAINER_ROOTFS/etc/hosts
 sudo sed -i "s/iface eth0 inet dhcp/iface eth0 inet static\n    address $CONTAINER_IP\n    netmask 255.255.255.0\n    gateway 10.0.3.1\n    dns-nameserver 10.0.3.1\n    dns-search dedi.laxis.it/" $CONTAINER_ROOTFS/etc/network/interfaces
 

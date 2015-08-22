@@ -15,7 +15,7 @@ locale-gen; update-locale LANG=en_US.UTF-8
 echo "dedi" > /etc/hostname
 
 cat > /etc/resolv.conf << EOT
-domain laxis.it
+search laxis.it
 nameserver 213.186.33.99
 nameserver 8.8.8.8
 nameserver 8.8.4.4

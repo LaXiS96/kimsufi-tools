@@ -17,5 +17,8 @@ if [[ ! -n $CONTAINER_NAME ]]; then
   exit 1
 fi
 
+echo "Stopping container $CONTAINER_NAME..."
 sudo lxc-stop -n $CONTAINER_NAME
+echo "Destroying container $CONTAINER_NAME..."
 sudo lxc-destroy -n $CONTAINER_NAME
+echo "Done!"

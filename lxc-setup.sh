@@ -45,11 +45,6 @@ cat $HOME/.ssh/id_rsa.pub | sudo tee $CONTAINER_ROOTFS/root/.ssh/authorized_keys
 sudo chmod 600 $CONTAINER_ROOTFS/root/.ssh/authorized_keys
 sudo chown -R 100000:100000 $CONTAINER_ROOTFS/root/.ssh
 
-HOST_IP=$(curl -s https://api.ipify.org)
-CONTAINER_IP=$(sudo lxc-info -iH -n $CONTAINER_NAME)
-sudo sed -i "s/127.0.1.1\s\{0,\}$CONTAINER_NAME/$HOST_IP $CONTAINER_NAME.dedi.laxis.it $CONTAINER_NAME/" $CONTAINER_ROOTFS/etc/hosts
-sudo sed -i "s/iface eth0 inet dhcp/iface eth0 inet static\n    address $CONTAINER_IP\n    netmask 255.255.255.0\n    gateway 10.0.3.1\n    dns-nameserver 10.0.3.1\n    dns-search dedi.laxis.it/" $CONTAINER_ROOTFS/etc/network/interfaces
-
 sudo lxc-start -q -n $CONTAINER_NAME -d
 echo "Waiting 10 seconds for container to start..."
 sleep 10
@@ -59,6 +54,16 @@ if [[ ! $? -eq 0 ]]; then
   echo "FATAL: container does not seem to be able to access the Internet."
   exit 1
 fi
+
+CONTAINER_IP=$(sudo lxc-info -iH -n $CONTAINER_NAME)
+
+sudo lxc-stop -q -n $CONTAINER_NAME
+
+HOST_IP=$(curl -s https://api.ipify.org)
+sudo sed -i "s/127.0.1.1\s\{0,\}$CONTAINER_NAME/$HOST_IP $CONTAINER_NAME.dedi.laxis.it $CONTAINER_NAME/" $CONTAINER_ROOTFS/etc/hosts
+sudo sed -i "s/iface eth0 inet dhcp/iface eth0 inet static\n    address $CONTAINER_IP\n    netmask 255.255.255.0\n    gateway 10.0.3.1\n    dns-nameserver 10.0.3.1\n    dns-search dedi.laxis.it/" $CONTAINER_ROOTFS/etc/network/interfaces
+
+sudo lxc-start -q -n $CONTAINER_NAME -d
 
 echo "Updating APT packages lists..."
 sudo lxc-attach -q -n $CONTAINER_NAME -- apt-get -qq update

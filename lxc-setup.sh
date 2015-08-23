@@ -1,4 +1,6 @@
 #!/bin/sh
+PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAmgBKIauSRY253H4hcrS+0o/rTBKz552KxDC3WiYiBR2y5IFbYa81975ywErVIavBuB/tSLTsXZldf4G9GZ4z5CWCGYo7ccqkwJw+7C4w9Pw2rlQzw6rZKxDL4N1IgeBANL5KT2wfLRmb86ZC2+CUhC6Qnw7HWTTSz5cobKwEloVU2GsUAAdryGmMypJVRP1f1V6pgheCxhFsgvGqZ/6JDXLguSIx3+eslHz3D68etbXf0NFLxj2g7CeL3GA0OPojkdj6h0N1u1FobO1SxQoDNX2K+titAzmec//p5c3H0lMSvjx8MkV3VFIYVRiJU+CNV/Oo57ntNPV7qkb3JR7fKQ== Kimsufi"
+
 while [[ $# > 1 ]]; do
   key="$1"
   case $key in
@@ -54,6 +56,7 @@ fi
 sudo mkdir -p $CONTAINER_ROOTFS/root/.ssh
 sudo chmod 700 $CONTAINER_ROOTFS/root/.ssh
 cat $HOME/.ssh/id_rsa.pub | sudo tee $CONTAINER_ROOTFS/root/.ssh/authorized_keys 1>/dev/null
+echo "$PUBLIC_KEY" | sudo tee -a $CONTAINER_ROOTFS/root/.ssh/authorized_keys 1>/dev/null
 sudo chmod 600 $CONTAINER_ROOTFS/root/.ssh/authorized_keys
 sudo chown -R 100000:100000 $CONTAINER_ROOTFS/root/.ssh
 

@@ -26,7 +26,7 @@ echo "$PUBLIC_KEY" > /root/.ssh/authorized_keys
 chmod 700 /root/.ssh
 chmod 600 /root/.ssh/authorized_keys
 
-sed -i 's/Port 22/Port 52020/' /etc/ssh/sshd_config
+sed -i 's/Port 22/Port 52200/' /etc/ssh/sshd_config
 sed -i 's/#ListenAddress 0.0.0.0/ListenAddress 0.0.0.0/' /etc/ssh/sshd_config
 sed -i 's/#PermitRootLogin without-password/PermitRootLogin without-password/' /etc/ssh/sshd_config
 sed -i 's/PermitRootLogin yes/#PermitRootLogin yes/' /etc/ssh/sshd_config
@@ -68,7 +68,7 @@ cat > /etc/iptables.rules <<EOT
 # Inbound Established
 -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 # Inbound Forwardings
--A INPUT -p tcp -m state --state NEW -m multiport --dports 52020 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m multiport --dports 52200 -j ACCEPT
 -A INPUT -p icmp -m state --state NEW --icmp-type echo-request -j ACCEPT
 # LogDrop
 -N LOGDROP

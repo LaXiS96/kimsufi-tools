@@ -5,7 +5,7 @@ PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAmgBKIauSRY253H4hcrS+0o/rTBKz552K
 TOOLS_DIR="/home/antonio/dedi-tools"
 
 rm -rf /usr/local/rtm
-sed -i '/.*\/usr\/local\/rtm\/bin\/rtm.*/d' crontab
+sed -i '/.*\/usr\/local\/rtm\/bin\/rtm.*/d' /etc/crontab
 
 apt-get update
 apt-get -y purge bind9 bind9utils && rm -rf /var/cache/bind/

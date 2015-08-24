@@ -82,7 +82,7 @@ if [[ ! $? -eq 0 ]]; then
 fi
 
 echo "Installing required packages..."
-sudo lxc-attach -q -n $CONTAINER_NAME -- apt-get -qq -y install openssh-server nano bash-completion 1>/dev/null
+sudo lxc-attach -q -n $CONTAINER_NAME -- apt-get -qq -y install openssh-server nano bash-completion software-properties-common 1>/dev/null
 if [[ ! $? -eq 0 ]]; then
   echo "FATAL: errors while installing required packages."
   exit 1

@@ -6,8 +6,12 @@ while [[ $# > 1 ]]; do
       ADDRESS="$2"
       shift
     ;;
-    -p|--port)
-      PORT="$2"
+    -hp|--host-port)
+      HOST_PORT="$2"
+      shift
+    ;;
+    -gp|--guest-port)
+      GUEST_PORT="$2"
       shift
     ;;
     -t|--protocol)
@@ -25,8 +29,13 @@ if [[ ! -n $ADDRESS ]]; then
   exit 1
 fi
 
-if [[ ! -n $PORT ]]; then
-  echo "FATAL: missing port. (specify with -p <port>)"
+if [[ ! -n $HOST_PORT ]]; then
+  echo "FATAL: missing host port. (specify with -p <port>)"
+  exit 1
+fi
+
+if [[ ! -n $GUEST_PORT ]]; then
+  echo "FATAL: missing guest port. (specify with -p <port>)"
   exit 1
 fi
 
@@ -36,5 +45,5 @@ if [[ ! -n $PROTOCOL ]]; then
 fi
 
 echo "Activating rule..."
-sudo iptables -t nat -A PREROUTING -i eth0 -p $PROTOCOL --dport $PORT -j DNAT --to $ADDRESS:$PORT
+sudo iptables -t nat -A PREROUTING -i eth0 -p $PROTOCOL --dport $HOST_PORT -j DNAT --to $ADDRESS:$GUEST_PORT
 echo "Done!"

@@ -30,12 +30,12 @@ if [[ ! -n $ADDRESS ]]; then
 fi
 
 if [[ ! -n $HOST_PORT ]]; then
-  echo "FATAL: missing host port. (specify with -p <port>)"
+  echo "FATAL: missing host port. (specify with -hp <port>)"
   exit 1
 fi
 
 if [[ ! -n $GUEST_PORT ]]; then
-  echo "FATAL: missing guest port. (specify with -p <port>)"
+  echo "FATAL: missing guest port. (specify with -gp <port>)"
   exit 1
 fi
 

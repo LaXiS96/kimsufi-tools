@@ -4,13 +4,13 @@ exec &>/root/postinstall.log
 PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAmgBKIauSRY253H4hcrS+0o/rTBKz552KxDC3WiYiBR2y5IFbYa81975ywErVIavBuB/tSLTsXZldf4G9GZ4z5CWCGYo7ccqkwJw+7C4w9Pw2rlQzw6rZKxDL4N1IgeBANL5KT2wfLRmb86ZC2+CUhC6Qnw7HWTTSz5cobKwEloVU2GsUAAdryGmMypJVRP1f1V6pgheCxhFsgvGqZ/6JDXLguSIx3+eslHz3D68etbXf0NFLxj2g7CeL3GA0OPojkdj6h0N1u1FobO1SxQoDNX2K+titAzmec//p5c3H0lMSvjx8MkV3VFIYVRiJU+CNV/Oo57ntNPV7qkb3JR7fKQ== Kimsufi"
 TOOLS_DIR="/home/antonio/dedi-tools"
 
-rm -rf /usr/local/rtm
-sed -i '/.*\/usr\/local\/rtm\/bin\/rtm.*/d' /etc/crontab
+#rm -rf /usr/local/rtm
+#sed -i '/.*\/usr\/local\/rtm\/bin\/rtm.*/d' /etc/crontab
 
 apt-get update
 apt-get -y purge bind9 bind9utils && rm -rf /var/cache/bind/
 #apt-get -y install linux-image-server && mv /etc/grub.d/06_OVHkernel /etc/grub.d/25_OVHkernel && update-grub
-apt-get -y install --install-recommends linux-generic-lts-vivid && mv /etc/grub.d/06_OVHkernel /etc/grub.d/25_OVHkernel && update-grub
+apt-get -y install linux-generic-lts-vivid && mv /etc/grub.d/06_OVHkernel /etc/grub.d/25_OVHkernel && update-grub
 
 rm /etc/localtime && ln -s /usr/share/zoneinfo/CET /etc/localtime
 locale-gen; update-locale LANG=en_US.UTF-8
@@ -31,8 +31,7 @@ chmod 600 /root/.ssh/authorized_keys
 
 sed -i 's/Port 22/Port 52200/' /etc/ssh/sshd_config
 sed -i 's/#ListenAddress 0.0.0.0/ListenAddress 0.0.0.0/' /etc/ssh/sshd_config
-sed -i 's/#PermitRootLogin without-password/PermitRootLogin without-password/' /etc/ssh/sshd_config
-sed -i 's/PermitRootLogin yes/#PermitRootLogin yes/' /etc/ssh/sshd_config
+sed -i 's/PermitRootLogin yes/PermitRootLogin without-password/' /etc/ssh/sshd_config
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 
 adduser --disabled-password --gecos "Antonio Ceccato,,," antonio
@@ -94,4 +93,4 @@ chmod +x /etc/network/if-pre-up.d/iptables
 #echo "iptables-persistent iptables-persistent/autosave_v6 boolean true" | debconf-set-selections
 #apt-get -y install iptables-persistent
 
-reboot
+#reboot

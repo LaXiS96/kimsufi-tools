@@ -67,6 +67,14 @@ sudo sed -i "s/iface eth0 inet dhcp/iface eth0 inet static\n    address $CONTAIN
 sudo lxc-start -q -n $CONTAINER_NAME -d
 echo "Waiting 10 seconds for container to start..."
 sleep 10
+
+sudo lxc-attach -q -n $CONTAINER_NAME -- deluser ubuntu --remove-home
+if [[ $? -eq 0 ]]; then
+  echo "Successfully deleted user ubuntu (and his home)..."
+else
+  echo "Error deleting user ubuntu..."
+fi
+
 echo "Checking container connectivity..."
 sudo lxc-attach -q -n $CONTAINER_NAME -- ping -A -c 4 -W 1 8.8.8.8 1>/dev/null
 if [[ ! $? -eq 0 ]]; then

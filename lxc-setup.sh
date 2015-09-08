@@ -68,7 +68,7 @@ sudo lxc-start -q -n $CONTAINER_NAME -d
 echo "Waiting 10 seconds for container to start..."
 sleep 10
 
-sudo lxc-attach -q -n $CONTAINER_NAME -- deluser ubuntu --remove-home
+sudo lxc-attach -q -n $CONTAINER_NAME -- deluser ubuntu --remove-home 1>/dev/null
 if [[ $? -eq 0 ]]; then
   echo "Successfully deleted user ubuntu (and his home)..."
 else

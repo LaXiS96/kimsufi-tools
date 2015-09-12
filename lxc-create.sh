@@ -70,9 +70,9 @@ sleep 10
 
 sudo lxc-attach -q -n $CONTAINER_NAME -- deluser ubuntu --remove-home 1>/dev/null
 if [[ $? -eq 0 ]]; then
-  echo "Successfully deleted user ubuntu (and his home)..."
+  echo "Deleting user ubuntu (and his home)..."
 else
-  echo "Error deleting user ubuntu..."
+  echo "NOTICE: could not delete user ubuntu..."
 fi
 
 echo "Checking container connectivity..."

@@ -70,7 +70,7 @@ cat > /etc/iptables.rules <<EOT
 # Inbound Established
 -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 # Inbound Forwardings
--A INPUT -p tcp -m state --state NEW -m multiport --dports 52200 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW --dport 52200 -j ACCEPT
 -A INPUT -p icmp -m state --state NEW --icmp-type echo-request -j ACCEPT
 # LogDrop
 -N LOGDROP

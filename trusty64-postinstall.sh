@@ -59,9 +59,11 @@ echo "lxc.start.auto = 1" >> /etc/lxc/default.conf
 echo "lxc.start.delay = 5" >> /etc/lxc/default.conf
 chmod +x /var/lib/lxc
 
-apt-get -y install git &&
-git clone https://github.com/LaXiS96/dedi-tools.git $TOOLS_DIR &&
-chmod +x $TOOLS_DIR/*.sh $TOOLS_DIR/*.py &&
+apt-get -y install git
+git config --global user.name "Antonio Ceccato"
+git config --global user.email antonio.ceccato@hotmail.it
+git clone https://github.com/LaXiS96/dedi-tools.git $TOOLS_DIR
+chmod +x $TOOLS_DIR/*.sh
 chown -R antonio:antonio $TOOLS_DIR
 
 #ufw allow 52020/tcp && ufw --force enable
@@ -92,5 +94,7 @@ chmod +x /etc/network/if-pre-up.d/iptables
 #echo "iptables-persistent iptables-persistent/autosave_v4 boolean true" | debconf-set-selections
 #echo "iptables-persistent iptables-persistent/autosave_v6 boolean true" | debconf-set-selections
 #apt-get -y install iptables-persistent
+
+echo "Done!"
 
 #reboot

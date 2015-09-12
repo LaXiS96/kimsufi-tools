@@ -44,6 +44,6 @@ if [[ ! -n $PROTOCOL ]]; then
   exit 1
 fi
 
-echo "Activating rule..."
+echo "Forwarding host port $HOST_PORT $PROTOCOL to $ADDRESS:$GUEST_PORT..."
 sudo iptables -t nat -A PREROUTING -i eth0 -p $PROTOCOL --dport $HOST_PORT -j DNAT --to $ADDRESS:$GUEST_PORT
 echo "Done!"

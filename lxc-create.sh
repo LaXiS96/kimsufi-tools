@@ -68,12 +68,15 @@ sudo lxc-start -q -n $CONTAINER_NAME -d
 echo "Waiting 10 seconds for container to start..."
 sleep 10
 
+echo "Deleting user ubuntu (and his home)..."
 sudo lxc-attach -q -n $CONTAINER_NAME -- deluser ubuntu --remove-home 1>/dev/null
-if [[ $? -eq 0 ]]; then
-  echo "Deleting user ubuntu (and his home)..."
-else
+if [[ ! $? -eq 0 ]]; then
   echo "NOTICE: could not delete user ubuntu..."
 fi
+
+echo "Setting up timezone..."
+sudo lxc-attach -q -n $CONTAINER_NAME -- rm -f /etc/localtime
+sudo lxc-attach -q -n $CONTAINER_NAME -- ln -s /usr/share/zoneinfo/CET /etc/localtime
 
 echo "Checking container connectivity..."
 sudo lxc-attach -q -n $CONTAINER_NAME -- ping -A -c 4 -W 1 8.8.8.8 1>/dev/null
@@ -90,7 +93,7 @@ if [[ ! $? -eq 0 ]]; then
 fi
 
 echo "Installing required packages..."
-sudo lxc-attach -q -n $CONTAINER_NAME -- apt-get -qq -y install openssh-server nano bash-completion software-properties-common 1>/dev/null
+sudo lxc-attach -q -n $CONTAINER_NAME -- apt-get -qq -y install openssh-server nano bash-completion software-properties-common
 if [[ ! $? -eq 0 ]]; then
   echo "FATAL: errors while installing required packages."
   exit 1

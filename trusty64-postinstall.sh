@@ -57,7 +57,9 @@ echo "lxc.id_map = u 0 100000 65536" >> /etc/lxc/default.conf
 echo "lxc.id_map = g 0 100000 65536" >> /etc/lxc/default.conf
 echo "lxc.start.auto = 1" >> /etc/lxc/default.conf
 echo "lxc.start.delay = 5" >> /etc/lxc/default.conf
+echo "lxc.mount.entry = /share share none bind,create=dir 0 0" >> /etc/lxc/default.conf
 chmod +x /var/lib/lxc
+mkdir -m 0777 /share
 
 apt-get -y install git
 git config --global user.name "Antonio Ceccato"
